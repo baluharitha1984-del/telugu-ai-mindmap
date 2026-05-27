@@ -1,0 +1,6 @@
+{
+  "name": "Telugu AI Mind Map",
+  "description": "An interactive AI-powered tool to organize and study Telugu texts and lesson materials visually.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
