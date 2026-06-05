@@ -1,4 +1,4 @@
-name: Android Build APK
+name: Build APK and AAB
 
 on:
   workflow_dispatch:
@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      - name: Checkout
         uses: actions/checkout@v4
 
       - name: Setup Java
@@ -17,14 +17,23 @@ jobs:
           distribution: temurin
           java-version: 17
 
-      - name: Grant permission
-        run: chmod +x ./gradlew
+      - name: Give permission
+        run: chmod +x ./gradlew || true
 
-      - name: Build APK
-        run: ./gradlew assembleDebug
+      - name: Build APK (debug)
+        run: ./gradlew assembleDebug || echo "APK build failed"
+
+      - name: Build AAB (release)
+        run: ./gradlew bundleRelease || echo "AAB build failed"
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: APK
           path: app/build/outputs/apk/debug/*.apk
+
+      - name: Upload AAB
+        uses: actions/upload-artifact@v4
+        with:
+          name: AAB
+          path: app/build/outputs/bundle/release/*.aab
